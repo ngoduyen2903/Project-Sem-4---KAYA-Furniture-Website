@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/layouts/adminLayouts.xhtml">
+            <ui:define name="content">
+                <f:metadata>
+                    <f:event type="preRenderView" listener="#{loginMB.checkLogin1()}"></f:event>
+                </f:metadata>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Feedback Management</h2>
+                    </div>
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Product Image</th>
+                                    <th>Product Name</th>
+                                    <th>Customer Name</th>
+                                    <th>Date Creating Feedback</th>
+                                    <th>Feedback Content</th>
+                                    <th>Reviews</th>
+                                    <th>Action</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="#{feedbackMB.showAllFeedbacks()}" var="itemFeedBack">
+                                    <tr>
+                                        <td><img src="#{itemFeedBack.products.image}" width="50px;"/></td>
+                                        <td>#{itemFeedBack.products.productName}</td>
+                                        <td>#{itemFeedBack.feedbacks.customerID.fullname}</td>
+                                        <td>#{itemFeedBack.feedbacks.creationDate}</td>
+                                        <td>#{itemFeedBack.feedbackContent}</td>
+                                        <th>#{itemFeedBack.reviews}&nbsp;<i class="fa fa-star" style="color: blue;"></i></th>
+                                        <td>
+                                             <h:form>
+                                                 <h:commandButton type="submit" title="View All Feedback" value="View All Feedback" class="btn btn-info btn-sm" action="#{feedbackMB.viewRelated(itemFeedBack.products.productID)}"/>
+                                            </h:form>
+                                        </td>
+                                        <td>
+                                            <h:form>
+                                                <h:commandButton title="Change status feedback" class="btn btn-info btn-sm" value="#{itemFeedBack.feedbacks.status == 0 ? 'Enable' : 'Disable'}" action="#{feedbackMB.changeStatus(itemFeedBack.feedbacks.feedbackID)}" />
+                                            </h:form>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

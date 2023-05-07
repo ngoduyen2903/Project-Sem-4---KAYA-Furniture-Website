@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/layouts/adminLayouts.xhtml">
+            <ui:define name="content">
+                <f:metadata>
+                    <f:event type="preRenderView" listener="#{loginMB.checkLogin1()}"></f:event>
+                </f:metadata>
+                <h:form enctype="multipart/form-data" id="form">
+                    <section class="content-header">
+                        <div class="container-fluid">
+                            <div class="row mb-2">
+                                <div class="col-sm-6">
+                                    <small class="badge badge-success">
+                                        <i class="far fa-check-circle"></i><h:outputText value="&nbsp;#{promotionMB.messagePromotion}" style="color: #fff; font-size: 16px;"/>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="card-title">Promotion Management</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Promotion Management</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">                        
+                            <h:link class="btn btn-info btn-sm" outcome="/admin/addPromotion.xhtml"><i class="fas fa-plus"></i> Add</h:link>
+                        </div>
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Promotion Name</th>
+                                        <th>Product Name</th>
+                                        <th>Price</th>
+                                        <th>Date Start Apply Promotion</th>
+                                        <th>Date End Apply Promotion</th>
+                                        <th>Discount (%)</th>
+                                        <th>Price After Apply Discount ($)</th>
+                                        <th>Promotion Status</th>
+                                        <th>Note</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ui:repeat value="#{promotionMB.showAlPromotion()}" var="itemPromotion">
+                                        <tr>                                                     
+                                            <td><h:outputText value="#{itemPromotion.promotionName}"/></td>
+                                            <td>
+                                                <h:outputText value="#{itemPromotion.productID.productName}"/>
+                                            </td>
+                                            <td> <small class="badge badge-dark">
+                                                    $<h:outputText value="#{itemPromotion.productID.unitPrice}"/></small>
+                                            </td>
+                                            <td>
+                                                <h:outputText value="#{itemPromotion.promotionDate}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                </h:outputText>
+                                            </td>
+                                            <td>
+                                                <h:outputText value="#{itemPromotion.dateEnd}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                </h:outputText>
+                                            </td>
+                                            <td>
+                                                <small class="badge badge-success">
+                                                    <h:outputText value="#{itemPromotion.discount}%"/>
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <small class="badge badge-danger">
+                                                    <h:outputText value="#{itemPromotion.amountApplyPromotion}">
+                                                        <f:convertNumber currencySymbol="$" type="currency" />
+                                                    </h:outputText></small>
+                                            </td>
+                                            <td>
+                                                <small class="badge badge-warning">
+                                                    <h:outputText value="#{itemPromotion.productID.promotionStatus == 1 ? 'Promotion Enabled' : 'Promotion Disabled'}"/>
+                                                </small>
+                                            </td>
+                                            <td><h:outputText value="#{itemPromotion.note}"/></td>
+                                            <td>
+                                                <h:commandLink class="btn btn-info btn-sm" type="submit" title="Change promotion status" action="#{productMB.toggleEnabledPromotion(itemPromotion.productID.productID)}">
+                                                    <i class=" fas fa-check-circle"></i>
+                                                </h:commandLink>
+                                            </td>
+                                        </tr>  
+                                    </ui:repeat>                                  
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

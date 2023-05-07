@@ -1,0 +1,9 @@
+/dist/
+/build/
+/KAYA-war/dist/
+/KAYA-ejb/dist/
+/KAYA-ejb/build/
+/KAYA-war/build/
+/nbproject/private/
+/KAYA-ejb/nbproject/private/
+/KAYA-war/nbproject/private/

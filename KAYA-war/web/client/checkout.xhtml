@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <ui:composition template="/layouts/clientLayouts.xhtml">
+            <ui:define name="content">
+                <f:metadata>
+                    <f:event type="preRenderView" listener="#{loginMB.checkCustomer()}"></f:event>
+                </f:metadata>
+                <section class="breadcrumb breadcrumb_bg">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="breadcrumb_iner">
+                                    <div class="breadcrumb_iner_item">
+                                        <h2>Products Checkout</h2>
+                                        <p>Home <span>-</span> Products Checkout</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="checkout_area padding_top">
+                    <div class="container">
+                        <div class="billing_details">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="order_box">
+                                        <h3>Customer Information</h3>
+                                        <h:form class="row contact_form">
+                                            <div class="col-md-6 form-group">
+                                                <label for="fullname">Full Name</label>
+                                                <h:inputHidden value="#{customerMB.customers.customerID}"/>
+                                                <h:inputText value="#{customerMB.customers.fullname}" class="form-control" readonly="true"/>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="fullname">Username</label>
+                                                <h:inputText value="#{customerMB.customers.username}" class="form-control" readonly="true"/>
+                                            </div>
+
+                                            <div class="col-md-6 form-group">
+                                                <label for="fullname">Phone Number</label>
+                                                <h:inputText value="#{customerMB.customers.phoneNumber}" class="form-control" readonly="true"/>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="fullname">Email Address</label>
+                                                <h:inputText value="#{customerMB.customers.email}" class="form-control" readonly="true"/>
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label for="fullname">Address</label>
+                                                <h:inputTextarea value="#{customerMB.customers.address}" class="form-control" readonly="true" cols="30" rows="30"/>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="order_box">
+                                        <h2>Your Order</h2>
+                                        <ul class="list">
+                                            <li>
+                                                <a href="#"><b style="color: black;">Product Name</b>
+                                                    <span><b style="color: black;">Total</b></span>
+                                                </a>
+                                            </li>
+                                            <ui:repeat value="#{cartMB.showCartMB()}" var="item">
+                                                <li>
+                                                    <a href="#">
+                                                        <h:graphicImage url="#{item.image}" width="40px"/>&emsp;&nbsp;
+                                                        <b style="font-size: 10px;"><h:outputText value="#{item.proName}"/></b>
+                                                        <span class="middle"><b>x&nbsp;<h:outputText value="#{item.quantity}"/></b></span>
+                                                        <span class="last"><b>$<h:outputText value="#{item.totalPrice}" /></b></span>
+                                                    </a>
+                                                </li>
+                                            </ui:repeat>
+                                        </ul>
+                                        <ul class="list list_2">
+                                            <li>
+                                                <a href="#">Subtotal:
+                                                    <span>$<h:outputText value="#{cartMB.totalMoneyCart}"/></span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Payment Method:
+                                                    <span>Payment In Cash</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Total money:
+                                                    <span>$#{cartMB.totalMoneyCart}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="creat_account">
+
+                                        </div>
+                                        <div class="place_order_container">
+                                            <h:form>
+                                                <h:commandButton value="Place Order" type="submit" class="btn_3" action="#{cartMB.checkOutCart(loginMB.username)}" />
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

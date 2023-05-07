@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/layouts/adminLayouts.xhtml">
+            <ui:define name="content">
+                <f:metadata>
+                    <f:event type="preRenderView" listener="#{loginMB.checkLoginAdminOwner()}"></f:event>
+                </f:metadata>
+                <section class="content">
+                    <h:form id="quickForm" >
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Edit Profile</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <h:inputHidden value="#{employeeMB.employees.employeeID}"/>
+                                        <h:inputHidden value="#{employeeMB.employees.password}"/>
+                                        <h:inputHidden value="#{employeeMB.employees.status}"/>
+                                        <h:inputHidden value="#{employeeMB.employees.username}"/>
+                                        <div class="form-group">
+                                            <label for="fullname" class="col-sm-2 col-form-label">Full Name</label>
+                                            <h:inputText value="#{employeeMB.employees.fullname}" styleClass="form-control" required = "true" id="fullname" requiredMessage="This field cannot be empty!"/>
+                                            <h:message for = "fullname" style = "color: red; font-size: 12px;" /> 
+                                            <h:outputText value="#{employeeMB.fullnameMessage}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 col-form-label">Username</label>
+                                            <h:inputText value="#{employeeMB.employees.username}" styleClass="form-control" readonly="true" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 col-form-label">Password</label>
+                                            <h:inputText value="*********" styleClass="form-control" readonly="true" />
+                                            <h:commandLink action="/admin/changePass.xhtml" value="Change password here!" style="font-size: 14px;"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="address" class="col-sm-2 col-form-label">Address</label>
+                                            <h:inputText value="#{employeeMB.employees.address}" styleClass="form-control" required = "true" id="address" requiredMessage="This field cannot be empty!"/>
+                                            <h:message for = "address" style = "color: red;font-size: 12px;" /> 
+                                            <h:outputText value="#{employeeMB.addressMessage}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+                                            <h:inputText value="#{employeeMB.employees.phoneNumber}" maxlength="11" styleClass="form-control" required = "true" id="phoneNumber" requiredMessage="This field cannot be empty!"/>
+                                            <h:message for = "phoneNumber" style = "color: red;font-size: 12px;" /> 
+                                            <h:outputText value="#{employeeMB.phoneMessage}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-sm-2 col-form-label">Email</label>
+                                            <h:inputText value="#{employeeMB.employees.email}"  styleClass="form-control" required = "true" id="email" requiredMessage="This field cannot be empty!"/>
+                                            <h:message for = "email" style = "color: red;font-size: 12px;" /> 
+                                            <h:outputText value="#{employeeMB.emailMessage}"/>
+                                            <br/>
+                                            <small class="badge badge-warning"><i class="far fa-check-circle"></i>
+                                                <h:outputText value="&nbsp;#{employeeMB.messageUpdateProfile}" style="color: #060; font-size: 12px;"/>
+                                            </small>
+                                        </div>
+                                        <div class="form-group">
+                                            <h:commandButton type="submit" action="#{employeeMB.saveUpdateEmployee()}" class="btn btn-info btn-sm" value="Save"/>&nbsp;
+                                            <h:link outcome="/admin/index.xhtml" value="Back" class="btn btn-info btn-sm"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </section>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
